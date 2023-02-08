@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    networks:
+      - Inception
+    restart: always
+
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    networks:
+      - Inception
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    networks:
+      - Inception
+    restart: always
+
+networks:
+  Inception:
+    name: Inception

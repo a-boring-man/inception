@@ -7,6 +7,8 @@ services:
     networks:
       - Inception
     restart: always
+    env_file:
+      - .env
 
   nginx:
     container_name: nginx

@@ -4,8 +4,12 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 
 RUN apt-get install -y mariadb-server
-RUN service mysql start
+RUN sed -i 's/bind-address/bind-address = 0.0.0.0 #/i' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE 3306
 
-CMD ["mysqld", "--bind_address=0.0.0.0"]
+COPY ./mariadb.sh ./
+
+RUN chmod +x mariadb.sh
+
+ENTRYPOINT [ "./mariadb.sh" ]

@@ -9,6 +9,8 @@ services:
     restart: always
     env_file:
       - .env
+    volumes:
+      - mariadb-vol:/var/lib/mysql
 
   nginx:
     container_name: nginx
@@ -27,3 +29,11 @@ services:
 networks:
   Inception:
     name: Inception
+
+volumes:
+  mariadb-vol:
+    name: mariadb-volume
+    driver_opts:
+      device: /home/jrinna/volume/mariadb
+      type: volume
+      o: bind

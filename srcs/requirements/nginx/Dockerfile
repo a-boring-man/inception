@@ -8,4 +8,6 @@ RUN apt-get install -y openssl
 
 EXPOSE 443
 
+COPY ./nginx.conf /etc/nginx/conf.d
+
 CMD ["nginx","-g","daemon off;"]

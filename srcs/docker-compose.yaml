@@ -2,8 +2,9 @@ version: '3.5'
 
 services:
   mariadb:
-    container_name: mariadb
     build: ./requirements/mariadb
+    image: mariadb
+    container_name: mariadb
     networks:
       - Inception
     restart: always
@@ -13,11 +14,14 @@ services:
       - mariadb-vol:/var/lib/mysql
 
   nginx:
-    container_name: nginx
     build: ./requirements/nginx
+    image: nginx
+    container_name: nginx
     networks:
       - Inception
     restart: always
+    ports:
+      - 443:443
 
   wordpress:
     container_name: wordpress

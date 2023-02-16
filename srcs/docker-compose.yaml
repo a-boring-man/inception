@@ -21,7 +21,7 @@ services:
       - Inception
     restart: always
     ports:
-      - 443:443
+      - 80:80
 
   wordpress:
     container_name: wordpress
@@ -38,6 +38,6 @@ volumes:
   mariadb-vol:
     name: mariadb-volume
     driver_opts:
-      device: /home/jrinna/volume/mariadb
+      device: /home/jrinna/data/mariadb
       type: volume
       o: bind

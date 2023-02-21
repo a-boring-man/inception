@@ -3,6 +3,7 @@
 if [ ! -d "/var/lib/mysql/${MARIADB_NAME}" ]
 then
 
+	echo "creating database"
 	service		mysql start
 	sleep 5
 	mysql -e 	"CREATE DATABASE ${MARIADB_NAME};"
@@ -12,7 +13,8 @@ then
 	sed -i		"s/password = /password = ${MARIADB_ROOT_PWD} #/" /etc/mysql/debian.cnf
 	mysql -e	"ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PWD}'"
 	service		mysql stop
-
+else
+	echo "No need to create database"
 fi
 
 mysqld_safe

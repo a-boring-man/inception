@@ -10,8 +10,6 @@ services:
     networks:
       - Inception
     restart: always
-    ports:
-      - 3306:3306
     env_file:
       - .env
 
@@ -24,8 +22,6 @@ services:
     networks:
       - Inception
     restart: always
-    ports:
-      - 9000:9000
     depends_on:
       - mariadb
     env_file:
@@ -51,16 +47,16 @@ networks:
 
 volumes:
 
-  mariadb-vol:
-    name: mariadb-volume
-    driver_opts:
-      device: /home/jrinna/data/mariadb
-      type: volume
-      o: bind
-
   wordpress-vol:
     name: wordpress-volume
     driver_opts:
       device: /home/jrinna/data/wordpress
+      type: volume
+      o: bind
+
+  mariadb-vol:
+    name: mariadb-volume
+    driver_opts:
+      device: /home/jrinna/data/mariadb
       type: volume
       o: bind

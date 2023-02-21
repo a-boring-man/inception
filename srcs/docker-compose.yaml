@@ -50,6 +50,7 @@ networks:
     name: Inception
 
 volumes:
+
   mariadb-vol:
     name: mariadb-volume
     driver_opts:
@@ -57,7 +58,6 @@ volumes:
       type: volume
       o: bind
 
-volumes:
   wordpress-vol:
     name: wordpress-volume
     driver_opts:

@@ -6,6 +6,10 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
+COPY ./www.conf /etc/php/7.3/fpm/pool.d/www.conf
+
+#RUN mkdir -p /var/www/wordpress && chmod 755 /var/www/wordpress
+
 COPY ./wordpress.sh ./wordpress.sh
 RUN chmod +x ./wordpress.sh
 

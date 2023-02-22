@@ -18,7 +18,7 @@ services:
     image: wordpress
     build: ./requirements/wordpress
     volumes:
-      - wordpress-vol:/var/www/worpress
+      - wordpress-vol:/var/www/wordpress
     networks:
       - Inception
     restart: always
@@ -47,16 +47,16 @@ networks:
 
 volumes:
 
-  wordpress-vol:
-    name: wordpress-volume
-    driver_opts:
-      device: /home/jrinna/data/wordpress
-      type: volume
-      o: bind
-
   mariadb-vol:
     name: mariadb-volume
     driver_opts:
       device: /home/jrinna/data/mariadb
+      type: volume
+      o: bind
+
+  wordpress-vol:
+    name: wordpress-volume
+    driver_opts:
+      device: /home/jrinna/data/wordpress
       type: volume
       o: bind

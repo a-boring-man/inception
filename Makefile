@@ -10,58 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
-#update on every project
-LST_SRC :=	cgi/CGI \
-			client/Client client/ClientUtils \
-			config/Config config/ConfigServer config/LjohnSon config/Location \
-			core/main \
-			message/CreateResponse message/Methods message/Request \
-			other/Router other/utils \
-			server/Cluster server/Server server/ServerMethode \
+DC := docker-compose -f ./srcs/docker-compose.yaml
+volumes = ${shell docker volume ls -q}
 
-NAME := weebserv
+all :
+	${DC} up -d --build
 
-#update to match c or cpp
-CC := c++
-FILE_EXT := .cpp
-HEADER_EXT := .hpp
-CPPFLAGS := -std=c++98 #-pedantic
+down:
+	${DC} down
 
-#update if needed
-CFLAGS = -Wall -Wextra -Werror -MD -I$(DIR_INC) -g3 #-fsanitize=address -g3
-DIR_SRC := source#.
-SUB_DIR_LST := core test cgi client config message other server
+stop:
+	${DC} stop
 
-#shouldn't need to update
-RM := rm -rf
-MD := mkdir -p
-
-DIR_INC := include
-DIR_OBJ := .object
-
-OBJ=$(addprefix $(DIR_OBJ)/,$(addsuffix .o,$(LST_SRC)))
-DEP=$(addprefix $(DIR_OBJ)/,$(addsuffix .d,$(LST_SRC)))
-SUB_DIR=$(addprefix $(DIR_OBJ)/,$(SUB_DIR_LST))
-
-all : $(NAME)
-
-$(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
-
-$(DIR_OBJ)/%.o : $(DIR_SRC)/%$(FILE_EXT) Makefile | $(SUB_DIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
-
-$(SUB_DIR) :
-	$(MD) $@
-
-clean :
-	$(RM) $(DIR_OBJ)
+clean : down
+	docker system prune -af --volumes
 
 fclean : clean
-	$(RM) $(NAME)
+	docker volume rm ${volumes}
 
 re : fclean all
 
-.PHONY : all clean fclean re
-
--include $(DEP)
+.PHONY : all clean fclean re down stop
